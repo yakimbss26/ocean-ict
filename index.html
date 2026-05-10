@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ocean ICT · 부산과학고등학교</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --abyss:       #050a14;
+    --deep:        #0a1628;
+    --navy:        #0f1f3a;
+    --mid:         #17304f;
+    --seafoam:     #4fc3d9;
+    --cyan:        #7ee3f2;
+    --coral:       #ff9a7a;
+    --amber:       #f4c77b;
+    --kelp:        #5fb895;
+    --bone:        #e8ecef;
+    --mute:        #8a9bb4;
+    --faint:       #4a5a75;
+    --line:        rgba(127, 166, 207, 0.14);
+    --line-strong: rgba(127, 166, 207, 0.28);
+    --glow:        rgba(79, 195, 217, 0.15);
+    --display:     'Fraunces', 'IBM Plex Sans KR', serif;
+    --body:        'IBM Plex Sans KR', -apple-system, sans-serif;
+    --mono:        'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--body);
+    background: var(--abyss);
+    color: var(--bone);
+    line-height: 1.6;
+    overflow-x: hidden;
+    font-weight: 300;
+    letter-spacing: -0.005em;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 0%, rgba(79, 195, 217, 0.06), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 100%, rgba(95, 184, 149, 0.05), transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+    opacity: 0.04; mix-blend-mode: overlay;
+    pointer-events: none; z-index: 1;
+  }
+  main { position: relative; z-index: 2; }
+
+  /* ───── Nav ───── */
+  nav.top {
+    position: sticky; top: 0;
+    backdrop-filter: blur(20px);
+    background: rgba(5, 10, 20, 0.85);
+    border-bottom: 1px solid var(--line);
+    z-index: 100;
+    padding: 18px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  nav.top .brand {
+    font-family: var(--display);
+    font-size: 16px; font-weight: 600;
+    letter-spacing: 0.02em; font-style: italic;
+  }
+  nav.top .brand span { color: var(--seafoam); }
+  nav.top .links { display: flex; gap: 32px; font-size: 13px; }
+  nav.top .links a {
+    color: var(--mute); text-decoration: none;
+    font-weight: 400; letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  nav.top .links a:hover { color: var(--seafoam); }
+
+  /* ───── Hero ───── */
+  .hero {
+    min-height: 92vh;
+    padding: 80px 48px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .hero-meta {
+    font-family: var(--mono);
+    font-size: 11px; color: var(--faint);
+    letter-spacing: 0.18em; margin-bottom: 32px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-meta::before {
+    content: ''; width: 32px; height: 1px; background: var(--seafoam);
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(52px, 6.5vw, 100px);
+    font-weight: 300; line-height: 0.96;
+    letter-spacing: -0.03em; margin-bottom: 36px;
+  }
+  .hero h1 .italic {
+    font-style: italic; font-weight: 400; color: var(--seafoam);
+  }
+  .hero h1 .small {
+    display: block;
+    font-size: 0.36em;
+    color: var(--mute); font-weight: 300;
+    letter-spacing: 0.08em;
+    margin-top: 20px; font-style: normal;
+  }
+  .hero p.lead {
+    font-size: 17px; color: var(--bone);
+    opacity: 0.82; max-width: 520px;
+    margin-bottom: 48px; font-weight: 300; line-height: 1.7;
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--line);
+    padding-top: 32px; max-width: 560px;
+  }
+  .stat { padding-right: 24px; }
+  .stat + .stat { padding-left: 24px; border-left: 1px solid var(--line); }
+  .stat .num {
+    font-family: var(--display);
+    font-size: 44px; font-weight: 400;
+    color: var(--seafoam); line-height: 1;
+    margin-bottom: 8px; letter-spacing: -0.02em;
+  }
+  .stat .label {
+    font-size: 11px; color: var(--faint);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    font-family: var(--mono);
+  }
+  .hero-visual {
+    position: relative; height: 580px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .depth-chart { width: 100%; max-width: 480px; height: 100%; }
+  .depth-chart svg { width: 100%; height: 100%; display: block; }
+
+  /* ───── Sections ───── */
+  section {
+    padding: 120px 48px;
+    border-top: 1px solid var(--line);
+    position: relative;
+  }
+  .section-head {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 48px; margin-bottom: 64px;
+  }
+  .section-head .tag {
+    font-family: var(--mono);
+    font-size: 11px; color: var(--seafoam);
+    letter-spacing: 0.2em; padding-top: 12px;
+  }
+  .section-head h2 {
+    font-family: var(--display);
+    font-size: clamp(36px, 4.5vw, 64px);
+    font-weight: 300; line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .section-head h2 .italic { font-style: italic; color: var(--seafoam); font-weight: 400; }
+  .section-head .desc {
+    color: var(--mute); font-size: 15px;
+    max-width: 680px; margin-top: 24px; line-height: 1.7;
+  }
+
+  /* ───── Areas ───── */
+  .areas {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line-strong);
+    border: 1px solid var(--line-strong);
+  }
+  .area-card {
+    background: var(--deep);
+    padding: 40px 32px;
+    cursor: pointer;
+    transition: background 0.3s;
+    min-height: 280px;
+    display: flex; flex-direction: column;
+  }
+  .area-card:hover { background: var(--navy); }
+  .area-card .code {
+    font-family: var(--mono); font-size: 13px;
+    color: var(--seafoam); letter-spacing: 0.15em;
+    margin-bottom: 16px;
+  }
+  .area-card h3 {
+    font-family: var(--display);
+    font-size: 28px; font-weight: 400;
+    line-height: 1.15; margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+  .area-card .kr {
+    color: var(--mute); font-size: 13px;
+    line-height: 1.6; margin-bottom: auto;
+  }
+  .area-card .count {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--faint); letter-spacing: 0.1em;
+    margin-top: 32px; padding-top: 20px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between;
+  }
+  .area-card .count strong { color: var(--bone); font-weight: 500; }
+
+  /* ───── Filter Bar ───── */
+  .filter-bar {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--line-strong);
+    border: 1px solid var(--line-strong);
+    margin-bottom: 48px;
+  }
+  .filter-bar > * {
+    background: var(--deep);
+    padding: 18px 20px;
+    font-family: var(--body); color: var(--bone);
+    border: none; outline: none;
+    font-size: 14px; font-weight: 300;
+  }
+  .filter-bar input::placeholder { color: var(--faint); }
+  .filter-bar select { cursor: pointer; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%234fc3d9' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    padding-right: 44px;
+  }
+  .filter-bar > *:focus { background: var(--navy); }
+
+  .result-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 32px;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--faint); letter-spacing: 0.1em;
+  }
+  .result-meta .count-num { color: var(--seafoam); font-weight: 500; }
+
+  /* ───── Project Grid ───── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line-strong);
+    border: 1px solid var(--line-strong);
+  }
+  .card {
+    background: var(--deep);
+    padding: 28px 28px 24px;
+    cursor: pointer;
+    transition: background 0.25s;
+    display: flex; flex-direction: column;
+    min-height: 260px;
+  }
+  .card:hover { background: var(--navy); }
+  .card:hover .card-code { color: var(--cyan); }
+  .card-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  .card-code {
+    font-family: var(--mono); font-size: 12px;
+    color: var(--seafoam); letter-spacing: 0.15em;
+    transition: color 0.2s;
+  }
+  .card-badges { display: flex; gap: 6px; }
+  .badge {
+    font-family: var(--mono); font-size: 9px;
+    letter-spacing: 0.1em; padding: 3px 8px;
+    border: 1px solid var(--line-strong);
+    color: var(--mute); border-radius: 1px;
+  }
+  .badge.video { border-color: var(--coral); color: var(--coral); }
+  .card h4 {
+    font-family: var(--display);
+    font-size: 19px; font-weight: 400;
+    line-height: 1.35; margin-bottom: 20px;
+    letter-spacing: -0.005em; color: var(--bone);
+  }
+  .card-foot {
+    margin-top: auto; padding-top: 20px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; color: var(--mute);
+    font-family: var(--mono); letter-spacing: 0.08em;
+  }
+  .card-foot .area { color: var(--seafoam); }
+  .card-foot .disc { display: flex; gap: 4px; }
+  .card-foot .disc span {
+    padding: 2px 6px;
+    background: rgba(127, 166, 207, 0.08);
+    border-radius: 1px; color: var(--mute);
+  }
+
+  /* ───── Modal ───── */
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(5, 10, 20, 0.82);
+    backdrop-filter: blur(8px);
+    z-index: 200; display: none;
+    align-items: center; justify-content: center;
+    padding: 40px 24px; overflow-y: auto;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--deep);
+    border: 1px solid var(--line-strong);
+    max-width: 860px; width: 100%;
+    padding: 48px 56px; position: relative;
+    max-height: calc(100vh - 80px); overflow-y: auto;
+  }
+  .modal-close {
+    position: absolute; top: 20px; right: 24px;
+    background: none; border: none;
+    color: var(--mute); font-size: 24px;
+    cursor: pointer; font-family: var(--body); padding: 8px;
+  }
+  .modal-close:hover { color: var(--seafoam); }
+  .modal-code {
+    font-family: var(--mono); font-size: 12px;
+    color: var(--seafoam); letter-spacing: 0.2em;
+    margin-bottom: 16px;
+  }
+  .modal h3 {
+    font-family: var(--display);
+    font-size: 32px; font-weight: 400;
+    line-height: 1.25; margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+  .modal-meta {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--line);
+    margin-bottom: 32px; border: 1px solid var(--line);
+  }
+  .modal-meta > div { background: var(--navy); padding: 16px 20px; }
+  .modal-meta .lbl {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--faint); letter-spacing: 0.15em; margin-bottom: 6px;
+  }
+  .modal-meta .val { font-size: 14px; color: var(--bone); }
+  .modal-members { margin-bottom: 28px; }
+  .modal-members .lbl {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--faint); letter-spacing: 0.15em; margin-bottom: 12px;
+  }
+  .modal-members-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .member-chip {
+    padding: 6px 14px; background: var(--navy);
+    border: 1px solid var(--line);
+    font-size: 13px; color: var(--bone);
+  }
+  .member-chip span {
+    color: var(--faint); font-family: var(--mono);
+    font-size: 11px; margin-right: 6px;
+  }
+  .modal-video {
+    aspect-ratio: 16/9; width: 100%;
+    background: var(--abyss);
+    border: 1px solid var(--line); margin-top: 8px;
+  }
+  .modal-video iframe { width: 100%; height: 100%; border: none; }
+  .modal-novideo {
+    padding: 48px 24px; background: var(--navy);
+    border: 1px dashed var(--line-strong);
+    text-align: center; color: var(--mute);
+    font-size: 13px; font-family: var(--mono);
+    letter-spacing: 0.05em;
+  }
+
+  /* ═════════════════════════════════════
+     VOYAGE — 5단계 항해 타임라인
+     ═════════════════════════════════════ */
+  .voyage-intro {
+    background: var(--deep);
+    border: 1px solid var(--line-strong);
+    padding: 36px 40px;
+    margin-bottom: 64px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 48px; align-items: center;
+  }
+  .voyage-intro .lbl {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--faint); letter-spacing: 0.2em;
+    margin-bottom: 10px;
+  }
+  .voyage-intro h4 {
+    font-family: var(--display);
+    font-size: 26px; font-weight: 400;
+    font-style: italic; color: var(--seafoam);
+    line-height: 1.2;
+  }
+  .voyage-intro p {
+    color: var(--mute); font-size: 14px;
+    line-height: 1.75; margin: 0;
+  }
+  .voyage-intro p strong { color: var(--bone); font-weight: 500; }
+
+  /* Timeline rail */
+  .timeline {
+    position: relative;
+    padding: 60px 0 20px;
+  }
+  .timeline::before {
+    content: ''; position: absolute;
+    top: 90px; left: 6%; right: 6%;
+    height: 1px;
+    background: linear-gradient(to right,
+      transparent 0%,
+      var(--line-strong) 5%,
+      var(--line-strong) 95%,
+      transparent 100%);
+    z-index: 1;
+  }
+  .timeline-dots {
+    position: absolute;
+    top: 78px; left: 0; right: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    z-index: 2;
+  }
+  .timeline-dots .dot {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--abyss);
+    border: 2px solid var(--seafoam);
+    margin: 0 auto;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .timeline-dots .dot::after {
+    content: '';
+    position: absolute; inset: 5px;
+    border-radius: 50%;
+    background: var(--seafoam);
+    opacity: 0.4;
+    transition: opacity 0.3s;
+  }
+  .timeline-dots .dot.pitch::before {
+    content: '🎤';
+    position: absolute; top: -28px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+  }
+
+  .voyage-stages {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--line-strong);
+    border: 1px solid var(--line-strong);
+    position: relative; z-index: 3;
+  }
+  .stage {
+    background: var(--deep);
+    padding: 32px 24px 28px;
+    cursor: pointer;
+    transition: background 0.3s;
+    min-height: 340px;
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+  .stage:hover { background: var(--navy); }
+  .stage.open { background: var(--navy); }
+
+  .stage-num {
+    font-family: var(--display);
+    font-size: 14px; color: var(--faint);
+    letter-spacing: 0.05em; margin-bottom: 8px;
+    font-style: italic;
+  }
+  .stage-name-en {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--seafoam); letter-spacing: 0.2em;
+    margin-bottom: 16px;
+  }
+  .stage-name {
+    font-family: var(--display);
+    font-size: 22px; font-weight: 400;
+    line-height: 1.2; margin-bottom: 18px;
+    color: var(--bone); letter-spacing: -0.01em;
+  }
+  .stage-summary {
+    font-size: 13px; color: var(--mute);
+    line-height: 1.65; margin-bottom: 20px;
+  }
+  .stage-pitch {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px;
+    background: rgba(255, 154, 122, 0.08);
+    border: 1px solid rgba(255, 154, 122, 0.3);
+    color: var(--coral);
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.12em;
+    margin-bottom: 16px;
+    align-self: flex-start;
+  }
+  .stage-out {
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .stage-out .lbl {
+    font-family: var(--mono); font-size: 9px;
+    color: var(--faint); letter-spacing: 0.15em;
+    margin-bottom: 6px;
+  }
+  .stage-out .val {
+    font-size: 12px; color: var(--bone);
+    line-height: 1.5;
+  }
+
+  /* Stage detail panel (expands below) */
+  .stage-detail {
+    grid-column: 1 / -1;
+    background: var(--navy);
+    border-top: 1px solid var(--seafoam);
+    padding: 48px 56px;
+    display: none;
+    animation: slideDown 0.4s ease;
+  }
+  .stage-detail.open { display: block; }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .stage-detail-head {
+    display: flex; align-items: baseline; gap: 20px;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .stage-detail-head .num {
+    font-family: var(--display); font-style: italic;
+    font-size: 48px; color: var(--seafoam);
+    font-weight: 300; line-height: 1;
+  }
+  .stage-detail-head h3 {
+    font-family: var(--display);
+    font-size: 32px; font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .stage-detail-head .en {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--mute); letter-spacing: 0.2em;
+    margin-left: auto;
+  }
+  .stage-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+  .detail-block .lbl {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--seafoam); letter-spacing: 0.18em;
+    margin-bottom: 14px;
+  }
+  .detail-block h5 {
+    font-family: var(--display);
+    font-size: 18px; font-weight: 400;
+    margin-bottom: 16px; color: var(--bone);
+  }
+  .detail-block ul {
+    list-style: none; padding: 0;
+  }
+  .detail-block ul li {
+    color: var(--bone);
+    font-size: 14px; line-height: 1.7;
+    padding: 8px 0 8px 24px;
+    position: relative;
+    border-bottom: 1px solid var(--line);
+  }
+  .detail-block ul li:last-child { border-bottom: none; }
+  .detail-block ul li::before {
+    content: '○';
+    position: absolute; left: 0; top: 8px;
+    color: var(--seafoam); font-size: 10px;
+  }
+  .detail-block ul.checks li::before {
+    content: '☐';
+    font-size: 14px; top: 6px;
+  }
+  .detail-block ul.checks li small {
+    display: block;
+    color: var(--mute); font-size: 12px;
+    margin-top: 4px;
+  }
+  .detail-tips {
+    margin-top: 32px;
+    padding: 20px 24px;
+    background: rgba(244, 199, 123, 0.05);
+    border-left: 2px solid var(--amber);
+    color: var(--bone);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .detail-tips strong {
+    color: var(--amber);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* ───── Download box ───── */
+  .download-box {
+    margin-bottom: 32px;
+    padding: 28px 32px;
+    background: linear-gradient(135deg, rgba(79, 195, 217, 0.08), rgba(126, 227, 242, 0.04));
+    border: 1px solid rgba(79, 195, 217, 0.35);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: center;
+  }
+  .download-box .dl-text .lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--seafoam);
+    letter-spacing: 0.18em;
+    margin-bottom: 8px;
+  }
+  .download-box .dl-text h5 {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--bone);
+    margin-bottom: 6px;
+    letter-spacing: -0.005em;
+  }
+  .download-box .dl-text p {
+    color: var(--mute);
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 24px;
+    background: var(--seafoam);
+    color: var(--abyss);
+    border: none;
+    font-family: var(--body);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    text-decoration: none;
+  }
+  .dl-btn:hover { background: var(--cyan); }
+  .dl-btn:active { transform: translateY(1px); }
+  .dl-btn .ico {
+    font-family: var(--mono);
+    font-size: 16px;
+    line-height: 1;
+  }
+  .dl-btn .meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    opacity: 0.7;
+    letter-spacing: 0.1em;
+    margin-left: 4px;
+  }
+
+  /* Compact download chip in stage card */
+  .stage-dl-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(79, 195, 217, 0.1);
+    border: 1px solid rgba(79, 195, 217, 0.3);
+    color: var(--seafoam);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    margin-top: 12px;
+    align-self: flex-start;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+  .stage-dl-chip:hover { background: rgba(79, 195, 217, 0.2); }
+
+  /* ───── Footer ───── */
+  footer {
+    padding: 80px 48px 48px;
+    border-top: 1px solid var(--line);
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 48px;
+  }
+  footer .col h5 {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--faint); letter-spacing: 0.2em;
+    margin-bottom: 16px;
+  }
+  footer .col p, footer .col a {
+    font-size: 13px; color: var(--mute);
+    text-decoration: none; line-height: 1.8; display: block;
+  }
+  footer .col a:hover { color: var(--seafoam); }
+  footer .col .tag {
+    font-family: var(--display); font-size: 18px;
+    color: var(--bone); font-style: italic; font-weight: 400;
+  }
+
+  /* ───── Responsive ───── */
+  @media (max-width: 1100px) {
+    .voyage-stages { grid-template-columns: repeat(5, minmax(200px, 1fr)); overflow-x: auto; }
+  }
+  @media (max-width: 960px) {
+    nav.top { padding: 14px 24px; }
+    nav.top .links { gap: 16px; font-size: 12px; }
+    .hero { grid-template-columns: 1fr; padding: 48px 24px; gap: 48px; min-height: auto; }
+    .hero-visual { height: 320px; }
+    section { padding: 64px 24px; }
+    .section-head { grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
+    .areas { grid-template-columns: 1fr 1fr; }
+    .filter-bar { grid-template-columns: 1fr; }
+    .grid { grid-template-columns: 1fr; }
+    .modal { padding: 32px 24px; }
+    .modal h3 { font-size: 24px; }
+    .modal-meta { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr; padding: 48px 24px; }
+    .hero-stats { max-width: 100%; }
+    .voyage-intro { grid-template-columns: 1fr; padding: 24px; gap: 16px; }
+    .voyage-stages { grid-template-columns: 1fr; overflow: visible; }
+    .timeline::before, .timeline-dots { display: none; }
+    .timeline { padding: 0; }
+    .stage { min-height: auto; }
+    .stage-detail { padding: 32px 24px; }
+    .stage-detail-head { flex-direction: column; gap: 8px; }
+    .stage-detail-head .en { margin-left: 0; }
+    .stage-detail-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero > * { animation: fadeUp 0.8s ease-out both; }
+  .hero-visual { animation-delay: 0.2s; }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="brand">Ocean<span>ICT</span> — <em style="font-style: italic; opacity: 0.6;">'26</em></div>
+  <div class="links">
+    <a href="#about">소개</a>
+    <a href="#areas">영역</a>
+    <a href="#projects">선배 작품</a>
+    <a href="#voyage">우리의 항해</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero" style="border-top: none; padding-top: 64px;">
+  <div>
+    <div class="hero-meta">부산과학고등학교 · 1학년 프로젝트 · 2026</div>
+    <h1>
+      선배들의 항해를 따라,<br>
+      <span class="italic">너의 항로를 그릴 시간</span>
+      <span class="small">OCEAN ICT — 1ST GRADE PROJECT GUIDE</span>
+    </h1>
+    <p class="lead">
+      Ocean ICT는 부산과학고가 8년째 이어온 해양·정보기술 융합 연구 발표의 장이다.
+      이 사이트는 너희가 그 항해를 처음 떠나는 데 필요한 모든 것을 담았다.
+      선배들이 무엇을 탐구했는지 둘러보고, 우리 팀의 다섯 단계 여정을 확인하자.
+    </p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="num">84</div>
+        <div class="label">선배 팀</div>
+      </div>
+      <div class="stat">
+        <div class="num">04</div>
+        <div class="label">영역</div>
+      </div>
+      <div class="stat">
+        <div class="num">05</div>
+        <div class="label">우리 단계</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="depth-chart">
+      <svg viewBox="0 0 480 580" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="80" x2="480" y2="80" stroke="#4fc3d9" stroke-width="0.5" opacity="0.5"/>
+        <text x="0" y="70" fill="#4a5a75" font-family="JetBrains Mono" font-size="9" letter-spacing="2">SURFACE — 0m</text>
+        <g opacity="0.6">
+          <line x1="0" y1="180" x2="480" y2="180" stroke="#4a5a75" stroke-width="0.3" stroke-dasharray="2 4"/>
+          <text x="0" y="176" fill="#4a5a75" font-family="JetBrains Mono" font-size="8">-200m</text>
+          <line x1="0" y1="300" x2="480" y2="300" stroke="#4a5a75" stroke-width="0.3" stroke-dasharray="2 4"/>
+          <text x="0" y="296" fill="#4a5a75" font-family="JetBrains Mono" font-size="8">-1000m</text>
+          <line x1="0" y1="440" x2="480" y2="440" stroke="#4a5a75" stroke-width="0.3" stroke-dasharray="2 4"/>
+          <text x="0" y="436" fill="#4a5a75" font-family="JetBrains Mono" font-size="8">-3000m</text>
+          <line x1="0" y1="540" x2="480" y2="540" stroke="#4a5a75" stroke-width="0.3" stroke-dasharray="2 4"/>
+          <text x="0" y="536" fill="#4a5a75" font-family="JetBrains Mono" font-size="8">-6000m (ABYSSAL)</text>
+        </g>
+        <path d="M0,120 Q120,110 240,130 T480,125" stroke="#4fc3d9" stroke-width="0.6" fill="none" opacity="0.4"/>
+        <path d="M0,220 Q100,200 200,240 Q320,260 480,225" stroke="#4fc3d9" stroke-width="0.6" fill="none" opacity="0.35"/>
+        <path d="M0,340 Q140,310 260,360 T480,340" stroke="#4fc3d9" stroke-width="0.6" fill="none" opacity="0.3"/>
+        <g>
+          <circle cx="80" cy="110" r="2.5" fill="#f4c77b" opacity="0.9"/>
+          <circle cx="140" cy="95" r="2" fill="#f4c77b" opacity="0.7"/>
+          <circle cx="210" cy="125" r="2.5" fill="#f4c77b" opacity="0.9"/>
+          <circle cx="280" cy="100" r="2" fill="#f4c77b" opacity="0.8"/>
+          <circle cx="360" cy="115" r="2" fill="#f4c77b" opacity="0.7"/>
+          <circle cx="420" cy="95" r="2.5" fill="#f4c77b" opacity="0.9"/>
+          <circle cx="60" cy="220" r="2.5" fill="#5fb895" opacity="0.9"/>
+          <circle cx="110" cy="240" r="2" fill="#5fb895" opacity="0.7"/>
+          <circle cx="150" cy="200" r="2.5" fill="#5fb895" opacity="0.9"/>
+          <circle cx="200" cy="235" r="2" fill="#5fb895" opacity="0.8"/>
+          <circle cx="240" cy="215" r="2.5" fill="#5fb895" opacity="0.9"/>
+          <circle cx="280" cy="250" r="2" fill="#5fb895" opacity="0.7"/>
+          <circle cx="320" cy="220" r="2.5" fill="#5fb895" opacity="0.9"/>
+          <circle cx="370" cy="245" r="2" fill="#5fb895" opacity="0.8"/>
+          <circle cx="410" cy="215" r="2.5" fill="#5fb895" opacity="0.9"/>
+          <circle cx="90" cy="280" r="2" fill="#5fb895" opacity="0.7"/>
+          <circle cx="180" cy="285" r="2" fill="#5fb895" opacity="0.8"/>
+          <circle cx="260" cy="290" r="2" fill="#5fb895" opacity="0.7"/>
+          <circle cx="340" cy="285" r="2.5" fill="#5fb895" opacity="0.9"/>
+          <circle cx="430" cy="275" r="2" fill="#5fb895" opacity="0.8"/>
+          <circle cx="100" cy="370" r="2.5" fill="#ff9a7a" opacity="0.9"/>
+          <circle cx="200" cy="390" r="2" fill="#ff9a7a" opacity="0.8"/>
+          <circle cx="290" cy="360" r="2.5" fill="#ff9a7a" opacity="0.9"/>
+          <circle cx="380" cy="385" r="2" fill="#ff9a7a" opacity="0.7"/>
+          <circle cx="70" cy="470" r="2.5" fill="#4fc3d9" opacity="0.9"/>
+          <circle cx="140" cy="490" r="2" fill="#4fc3d9" opacity="0.7"/>
+          <circle cx="210" cy="460" r="2.5" fill="#4fc3d9" opacity="0.9"/>
+          <circle cx="280" cy="495" r="2" fill="#4fc3d9" opacity="0.8"/>
+          <circle cx="360" cy="470" r="2.5" fill="#4fc3d9" opacity="0.9"/>
+          <circle cx="420" cy="485" r="2" fill="#4fc3d9" opacity="0.7"/>
+        </g>
+        <circle cx="240" cy="300" r="4" fill="#4fc3d9" opacity="0.9">
+          <animate attributeName="r" from="4" to="60" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" from="0.6" to="0" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="240" cy="300" r="3" fill="#7ee3f2"/>
+        <g transform="translate(300, 555)" font-family="JetBrains Mono" font-size="8" fill="#8a9bb4">
+          <circle cx="0" cy="-3" r="2" fill="#f4c77b"/><text x="6" y="0">A</text>
+          <circle cx="28" cy="-3" r="2" fill="#5fb895"/><text x="34" y="0">B</text>
+          <circle cx="56" cy="-3" r="2" fill="#ff9a7a"/><text x="62" y="0">C</text>
+          <circle cx="84" cy="-3" r="2" fill="#4fc3d9"/><text x="90" y="0">D</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<section id="about">
+  <div class="section-head">
+    <div class="tag">§ 01 — WHAT IS OCEAN ICT</div>
+    <div>
+      <h2>Ocean ICT란 <span class="italic">무엇인가</span></h2>
+      <div class="desc">
+        부산은 바다의 도시다. 그리고 부산과학고는 그 도시에서 자란 학생들이
+        해양과 정보기술을 엮어 자기만의 질문을 던지는 곳이다.
+        Ocean ICT Festival은 그 질문들이 모이는 연례 발표회이며,
+        매년 전교생이 팀을 꾸려 참여한다. 1학년인 너희는 곧 그 무대에 설 사람들이다.
+        이 프로젝트는 본 무대를 준비하는 첫 번째 항해다.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ AREAS ═══════════ -->
+<section id="areas">
+  <div class="section-head">
+    <div class="tag">§ 02 — DOMAINS</div>
+    <div>
+      <h2>네 개의 <span class="italic">수역</span></h2>
+      <div class="desc">
+        Ocean ICT의 프로젝트는 네 영역으로 나뉜다. 표면의 문화와 관광, 중층의 생태와 환경,
+        심해의 자원, 그리고 바다 위를 가로지르는 선박 기술. 영역을 눌러 해당 수역의 선배 프로젝트를 탐색하자.
+      </div>
+    </div>
+  </div>
+
+  <div class="areas">
+    <div class="area-card" data-area="A" onclick="filterArea('A')">
+      <div class="code">— AREA A</div>
+      <h3>해양 문화<br>와 관광 진흥</h3>
+      <div class="kr">해수욕장, 조난 예방, 여행 추천, 이안류 — 사람이 바다를 만나는 지점의 기술</div>
+      <div class="count"><span>PROJECTS</span><strong id="count-A">00</strong></div>
+    </div>
+    <div class="area-card" data-area="B" onclick="filterArea('B')">
+      <div class="code">— AREA B</div>
+      <h3>해양 생태계<br>및 환경 보존</h3>
+      <div class="kr">해양 쓰레기, 미세플라스틱, 산성화, 생물 서식지 — 바다의 건강을 지키기 위한 탐구</div>
+      <div class="count"><span>PROJECTS</span><strong id="count-B">00</strong></div>
+    </div>
+    <div class="area-card" data-area="C" onclick="filterArea('C')">
+      <div class="code">— AREA C</div>
+      <h3>해양 자원의<br>이용 기반 구축</h3>
+      <div class="kr">파력·조력 발전, 해저 자원, 양식, 담수화 — 바다가 품은 에너지를 꺼내는 시도</div>
+      <div class="count"><span>PROJECTS</span><strong id="count-C">00</strong></div>
+    </div>
+    <div class="area-card" data-area="D" onclick="filterArea('D')">
+      <div class="code">— AREA D</div>
+      <h3>해양 선박<br>관련 기술</h3>
+      <div class="kr">자율 운항, 경로 최적화, 선체 구조, 연료 효율 — 바다를 건너는 기술의 진화</div>
+      <div class="count"><span>PROJECTS</span><strong id="count-D">00</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PROJECTS ═══════════ -->
+<section id="projects">
+  <div class="section-head">
+    <div class="tag">§ 03 — ARCHIVE</div>
+    <div>
+      <h2>선배들의 <span class="italic">기록부</span></h2>
+      <div class="desc">
+        제8회 Ocean ICT Festival에 참여한 84팀의 기록이다. 영역·학년·연계 학문으로 좁혀보거나
+        주제 키워드로 검색할 수 있다. 카드를 누르면 팀 구성과 발표 영상을 볼 수 있다.
+        너희 주제의 출발점이 여기 어딘가에 있을 것이다.
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <input type="text" id="search" placeholder="주제 검색 — 예: 해양쓰레기, 미세플라스틱, AI">
+    <select id="area-filter">
+      <option value="">모든 영역</option>
+      <option value="A">A · 문화·관광</option>
+      <option value="B">B · 생태·환경</option>
+      <option value="C">C · 자원 이용</option>
+      <option value="D">D · 선박 기술</option>
+    </select>
+    <select id="grade-filter">
+      <option value="">모든 학년</option>
+      <option value="1">1학년</option>
+      <option value="2">2학년</option>
+      <option value="3">3학년</option>
+    </select>
+    <select id="disc-filter">
+      <option value="">모든 학문</option>
+      <option value="물">물리</option>
+      <option value="화">화학</option>
+      <option value="생">생명</option>
+      <option value="지">지구과학</option>
+      <option value="기타">기타·융합</option>
+    </select>
+  </div>
+
+  <div class="result-meta">
+    <div><span class="count-num" id="visible-count">0</span> / <span id="total-count">0</span> PROJECTS</div>
+    <div id="active-filter">ALL DOMAINS</div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- ═══════════ VOYAGE — 5단계 항해 ═══════════ -->
+<section id="voyage">
+  <div class="section-head">
+    <div class="tag">§ 04 — OUR VOYAGE</div>
+    <div>
+      <h2>우리의 <span class="italic">다섯 단계</span></h2>
+      <div class="desc">
+        앞으로 5차시 동안 우리는 한 번의 항해를 함께 할 것이다.
+        선배들이 했던 그대로, 4명이 한 팀이 되어 문제를 던지고, 답을 만들고, 발표한다.
+        각 단계를 눌러 무엇을 하는 시간인지 확인하자.
+      </div>
+    </div>
+  </div>
+
+  <div class="voyage-intro">
+    <div>
+      <div class="lbl">— VOYAGE RULES</div>
+      <h4>4인 1팀,<br>두 번의 발표</h4>
+    </div>
+    <p>
+      이 항해는 <strong>4명이 한 팀</strong>이 되어 진행한다.
+      도중에 <strong>두 번의 무대</strong>가 있다 — 2차시의 <strong>계획서 발표(5분)</strong>로 우리 방향을 검증받고,
+      5차시의 <strong>최종 발표</strong>로 결과물을 세상에 내놓는다.
+      산출물은 자유다. 코드, 시뮬레이션, 대시보드, 포스터, 영상 — 우리 주제에 가장 맞는 형태를 고르면 된다.
+    </p>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-dots">
+      <div class="dot"></div>
+      <div class="dot pitch"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot pitch"></div>
+    </div>
+
+    <div class="voyage-stages" id="voyage-stages">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ Modal ═══════════ -->
+<div class="modal-backdrop" id="modal-bg" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-code" id="m-code"></div>
+    <h3 id="m-title"></h3>
+    <div class="modal-meta">
+      <div><div class="lbl">AREA</div><div class="val" id="m-area"></div></div>
+      <div><div class="lbl">GRADE</div><div class="val" id="m-grade"></div></div>
+      <div><div class="lbl">DISCIPLINES</div><div class="val" id="m-disc"></div></div>
+    </div>
+    <div class="modal-members">
+      <div class="lbl">TEAM MEMBERS</div>
+      <div class="modal-members-list" id="m-members"></div>
+    </div>
+    <div style="font-family: var(--mono); font-size: 10px; color: var(--faint); letter-spacing: 0.15em; margin-bottom: 12px;">PRESENTATION</div>
+    <div id="m-video-wrap"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="col">
+    <h5>— HOST</h5>
+    <div class="tag">부산과학고등학교</div>
+    <p style="margin-top: 8px;">지능정보교육부</p>
+  </div>
+  <div class="col">
+    <h5>— METAVERSE & VIDEO</h5>
+    <a href="https://www.youtube.com/@8thBSSOCEANICTFESTIVAL" target="_blank">제8회 공식 YouTube 채널 →</a>
+    <p style="margin-top: 8px; font-size: 12px; color: var(--faint);">메타버스 전시장 링크는 추후 안내</p>
+  </div>
+  <div class="col">
+    <h5>— FOR</h5>
+    <p>2026학년도 1학년</p>
+    <p style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; margin-top: 12px; color: var(--faint);">
+      //  YOUR FIRST VOYAGE<br>
+      //  BEGINS HERE.
+    </p>
+  </div>
+</footer>
+
+</main>
+
+<script>
+// ─────────────── Embedded Template Files (base64) ───────────────
+const TEMPLATE_FILES = {
+  planTemplate: {
+    mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    data: "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"
+  }
+};
+
+function downloadFile(key, filename) {
+  const f = TEMPLATE_FILES[key];
+  if (!f) { alert('파일을 찾을 수 없습니다.'); return; }
+  // Decode base64 to binary
+  const binary = atob(f.data);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  const blob = new Blob([bytes], { type: f.mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+// ─────────────── Project Data ───────────────
+const TEAMS = [{"no": 1, "code": "A01", "grade": 1, "members": [{"sid": 1106, "name": "홍지우"}, {"sid": 1112, "name": "이민호"}, {"sid": 1118, "name": "허준수"}, {"sid": 1119, "name": "허지원"}], "area_name": "해양 문화와 관광 진흥", "disciplines": ["물", "지", "기타"], "title": "조난에서 살아남기 - 바다편 -", "video_url": "https://www.youtube.com/watch?v=t3unqpiZtdo&t", "area": "A"}, {"no": 2, "code": "A02", "grade": 1, "members": [{"sid": 1110, "name": "박지호"}, {"sid": 1105, "name": "조유빈"}, {"sid": 1116, "name": "조재윤"}, {"sid": 1120, "name": "황지원"}], "area_name": "해양 문화와 관광 진흥", "disciplines": ["생", "지", "기타"], "title": "기상·환경 데이터 기반 해수욕장 조난 위험 예측 및 위험 구역 자동 판단 및 알림 시스템", "video_url": "https://www.youtube.com/watch?v=PzDDPiMq9R8", "area": "A"}, {"no": 3, "code": "A03", "grade": 1, "members": [{"sid": 1307, "name": "권승현"}, {"sid": 1306, "name": "조이영"}, {"sid": 1313, "name": "박민준"}, {"sid": 1314, "name": "박태민"}], "area_name": "해양 문화와 관광 진흥", "disciplines": ["물", "지"], "title": "파도에 따른 미래해양도시의 안정성을 높이는 방안 탐구", "video_url": "https://youtu.be/kAbAtdBc5Fw", "area": "A"}, {"no": 4, "code": "A04", "grade": 1, "members": [{"sid": 1501, "name": "강다향"}, {"sid": 1507, "name": "강석준"}, {"sid": 1514, "name": "이승빈"}, {"sid": 1519, "name": "하현우"}], "area_name": "해양 문화와 관광 진흥", "disciplines": ["물", "지"], "title": "이안류 예측에 따른 조난구조 프로그램 설계 ", "video_url": "(링크 오류)", "area": "A"}, {"no": 26, "code": "A05", "grade": 2, "members": [{"sid": 2201, "name": "권나경"}, {"sid": 2206, "name": "김건영"}], "area_name": "해양 문화와 관광 진흥", "disciplines": ["물", "지", "기타"], "title": "해수욕장으로 개발하기 좋은 지역 찾기", "video_url": "https://m.site.naver.com/1MHbl ", "area": "A"}, {"no": 27, "code": "A06", "grade": 2, "members": [{"sid": 2306, "name": "권오준"}, {"sid": 2313, "name": "이민찬"}], "area_name": "해양 문화와 관광 진흥", "disciplines": ["생", "지"], "title": "방사능이 없는 물고기가 먹고싶어요!!", "video_url": null, "area": "A"}, {"no": 28, "code": "A07", "grade": 2, "members": [{"sid": 2408, "name": "김윤호"}, {"sid": 2411, "name": "박성현"}], "area_name": "해양 문화와 관광 진흥", "disciplines": ["물", "지"], "title": "울렁껄렁 너울성 파도를 예측해보자~~", "video_url": "https://youtu.be/1rDuORpIezs", "area": "A"}, {"no": 29, "code": "A08", "grade": 2, "members": [{"sid": 2406, "name": "김민준"}, {"sid": 2410, "name": "김지안"}], "area_name": "해양 문화와 관광 진흥", "disciplines": ["물", "생"], "title": "해양 사고 예측 시스템 개발", "video_url": "https://m.site.naver.com/1MMNm", "area": "A"}, {"no": 66, "code": "A09", "grade": 3, "members": [{"sid": 3101, "name": "김아윤"}, {"sid": 3104, "name": "한예송"}], "area_name": "해양 문화와 관광 진흥", "disciplines": ["물", "생"], "title": "음파 신호 기반 해양 생물 탐지를 위한 센서 융합 시스템 개발", "video_url": "https://www.youtube.com/watch?v=VAQx-LB5c30", "area": "A"}, {"no": 67, "code": "A10", "grade": 3, "members": [{"sid": 3105, "name": "김성민"}, {"sid": 3107, "name": "서재원"}, {"sid": 3408, "name": "이건우"}, {"sid": 3306, "name": "김민기"}], "area_name": "해양 문화와 관광 진흥", "disciplines": ["물", "기타"], "title": "해양 활동별 맞춤 해변 추천 프로그램 개발", "video_url": "https://youtu.be/meBx7b2L2-I", "area": "A"}, {"no": 5, "code": "B01", "grade": 1, "members": [{"sid": 1104, "name": "장하림"}, {"sid": 1107, "name": "김민서"}, {"sid": 1111, "name": "서형준"}, {"sid": 1115, "name": "전준서"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["생", "지", "기타"], "title": "AI를 활용한 해양쓰레기 분류 및 해양 생태계에 미치는 영향 예측", "video_url": "https://youtube.com/watch?v=DSPbTT8QKqE&si=VWKhxbDXhOIjgLa3", "area": "B"}, {"no": 6, "code": "B02", "grade": 1, "members": [{"sid": 1102, "name": "박서현"}, {"sid": 1103, "name": "백지원"}, {"sid": 1113, "name": "이주환"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "지"], "title": "빛의 산란률을 이용한 바다 속 미세플라스틱 농도 측정 및 분석 프로그램 제작", "video_url": "https://youtu.be/3Y3D3Vhi_uk?si=ArGf-W4qwmwWCior", "area": "B"}, {"no": 7, "code": "B03", "grade": 1, "members": [{"sid": 1202, "name": "박윤하"}, {"sid": 1207, "name": "권유찬"}, {"sid": 1209, "name": "김태현"}, {"sid": 1216, "name": "이호원"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "기타"], "title": "해양 멸종위기 생물의 서식지 분포 시각화 및 이동경로 탐지", "video_url": "https://youtu.be/OEnKvlUx7Dc", "area": "B"}, {"no": 8, "code": "B04", "grade": 1, "members": [{"sid": 1312, "name": "문시윤"}, {"sid": 1309, "name": "김준민"}, {"sid": 1310, "name": "김현수"}, {"sid": 1315, "name": "안다원"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": [], "title": "오일펜스의 지형과 기후에 따른 최적화 모델 설계", "video_url": "https://youtu.be/_lU6i6OaeRs", "area": "B"}, {"no": 9, "code": "B05", "grade": 1, "members": [{"sid": 1316, "name": "이강제"}, {"sid": 1302, "name": "김소율"}, {"sid": 1303, "name": "박지유"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "지"], "title": "방사능 오염물질 농도 및 퍼지는 속도 시뮬레이션", "video_url": "https://youtu.be/CP90mouvLC8", "area": "B"}, {"no": 10, "code": "B06", "grade": 1, "members": [{"sid": 1406, "name": "최선빈"}, {"sid": 1416, "name": "정부경"}, {"sid": 1417, "name": "최제훈"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["화", "생"], "title": "바다 거북의 자기장 항법 메커니즘 연구와 생체모사 네비게이션 시스템 연구", "video_url": "https://youtu.be/F0LFeAiNWHI", "area": "B"}, {"no": 11, "code": "B07", "grade": 1, "members": [{"sid": 1410, "name": "백지수"}, {"sid": 1413, "name": "오형근"}, {"sid": 1418, "name": "황태윤"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "생"], "title": "미세플라스틱 침강속도가 해양에 미치는 영향과 감소시키는 방법", "video_url": null, "area": "B"}, {"no": 12, "code": "B08", "grade": 1, "members": [{"sid": 1404, "name": "정효원"}, {"sid": 1405, "name": "조한아"}, {"sid": 1411, "name": "양상혁"}, {"sid": 1412, "name": "오지훈"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["생", "지"], "title": "해안선 오염 정도에 따른 주변 자연식물 분포도 분석 모델", "video_url": "https://youtu.be/utyXQbz8KVg?si=6GPCrgg4QUBZb-v1", "area": "B"}, {"no": 13, "code": "B09", "grade": 1, "members": [{"sid": 1504, "name": "성은서"}, {"sid": 1505, "name": "이정윤"}, {"sid": 1512, "name": "박정욱"}, {"sid": 1518, "name": "주하음"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "지"], "title": "해조류의 광흡수 정보를 통한 최적화 배치 예측 모델 개발", "video_url": "https://youtu.be/sem4wRaziPg", "area": "B"}, {"no": 14, "code": "B10", "grade": 1, "members": [{"sid": 1510, "name": "김영훈"}, {"sid": 1513, "name": "신민승"}, {"sid": 1517, "name": "조형진"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "지"], "title": "엘니뇨/라니냐/중립 상태를 구분할 수 있는 패턴 인식 알고리즘 구현 및 평가", "video_url": "https://www.youtube.com/watch?v=VQtNcjt4_0c", "area": "B"}, {"no": 15, "code": "B11", "grade": 1, "members": [{"sid": 1508, "name": "권범준"}, {"sid": 1503, "name": "김지원"}, {"sid": 1502, "name": "김주하"}, {"sid": 1509, "name": "김민찬"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["화", "지"], "title": "해양산성화가 미치는 영향 탐구 및 데이터 분석을 통한 추적 모델 제작", "video_url": "https://youtu.be/3pziqqzM49s?si=lypYKeXtK7rS6Sq4", "area": "B"}, {"no": 16, "code": "B12", "grade": 1, "members": [{"sid": 1511, "name": "김휘상"}, {"sid": 1515, "name": "이시현"}, {"sid": 1516, "name": "이영준"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "생"], "title": "해류와 생명체 이동 분석을 통한 해양 생태계 개선 인공지능 개발", "video_url": "https://www.youtube.com/watch?v=sV9gsRyVuww", "area": "B"}, {"no": 30, "code": "B13", "grade": 2, "members": [{"sid": 2101, "name": "강혜진"}, {"sid": 2105, "name": "김건우"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "지"], "title": "북극해 해빙의 연도별 감소 양상 분석 및 ai를 활용한 미래 전망 예측", "video_url": "https://youtu.be/--SWDpduvKk?si=OwKDvUVdm3gW-frU", "area": "B"}, {"no": 31, "code": "B14", "grade": 2, "members": [{"sid": 2104, "name": "장서인"}, {"sid": 2114, "name": "정현철"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "지"], "title": "해양쓰레기 이동경로 추적 및 분석을 이용한 쓰레기 분류,수거 장치 설치", "video_url": "https://m.site.naver.com/1MNxT", "area": "B"}, {"no": 32, "code": "B15", "grade": 2, "members": [{"sid": 2103, "name": "방윤서"}, {"sid": 2111, "name": "이걸묵"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "기타"], "title": "해양 초음파 분석을 통한 멸종위기 돌고래 보호", "video_url": "https://youtu.be/Oxo0iy_7gxs", "area": "B"}, {"no": 33, "code": "B16", "grade": 2, "members": [{"sid": 2102, "name": "류화수"}, {"sid": 2107, "name": "송민호"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["지", "기타"], "title": "해저 화산 폭발 시 해양 쓰나미의 전파 시뮬레이션 및 피해", "video_url": "https://youtu.be/xAsSKnR8n20", "area": "B"}, {"no": 34, "code": "B17", "grade": 2, "members": [{"sid": 2204, "name": "정지민"}, {"sid": 2207, "name": "김기환"}, {"sid": 2214, "name": "정수환"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "지", "기타"], "title": "초음파를 이용한 미세플라스틱 응집시키기 도전!", "video_url": null, "area": "B"}, {"no": 35, "code": "B18", "grade": 2, "members": [{"sid": 2212, "name": "이희원"}, {"sid": 2215, "name": "최선웅"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["화", "기타"], "title": "해양 화학 데이터 분석을 통한 적조 예측 모델 개발", "video_url": "https://youtu.be/CizJIryZTME", "area": "B"}, {"no": 36, "code": "B19", "grade": 2, "members": [{"sid": 2208, "name": "김범수"}, {"sid": 2210, "name": "안상민"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["지"], "title": "주변 환경 인식 기반 해양 정화 로봇의 설계 및 구현", "video_url": "https://m.site.naver.com/1MHBl", "area": "B"}, {"no": 37, "code": "B20", "grade": 2, "members": [{"sid": 2209, "name": "김창욱"}, {"sid": 2211, "name": "이지우"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["화", "기타"], "title": "중금속 흡착을 통해 해양친구들과 놀아보자", "video_url": "https://youtu.be/AfxPRuCwzHc?si=qFLrAnbqT6A_RMep", "area": "B"}, {"no": 38, "code": "B21", "grade": 2, "members": [{"sid": 2203, "name": "봉가현"}, {"sid": 2205, "name": "최예진"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": [], "title": "파이썬을 이용한 폐부표 수거 시스템 ", "video_url": null, "area": "B"}, {"no": 39, "code": "B22", "grade": 2, "members": [{"sid": 2216, "name": "최신호"}, {"sid": 2217, "name": "허이현"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["화"], "title": "해양 산성화에 따른 조개 껍질 용해 속도 비교", "video_url": "https://youtu.be/GySBPAnGBN8", "area": "B"}, {"no": 40, "code": "B23", "grade": 2, "members": [{"sid": 2309, "name": "박상진"}, {"sid": 2310, "name": "선우무경"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["생", "지"], "title": "해류 예측 기반 해양 쓰레기 이동 유도 시스템", "video_url": "https://www.youtube.com/watch?v=mZ9yQIeSq_k", "area": "B"}, {"no": 41, "code": "B24", "grade": 2, "members": [{"sid": 2314, "name": "이찬서"}, {"sid": 2318, "name": "한서준"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["화"], "title": "조개야 죽지마~", "video_url": "https://youtube.com/channel/UCKMMS-rq17L_lE3SoSTtYkg?si=H95AaCg8Ipkdbies", "area": "B"}, {"no": 42, "code": "B25", "grade": 2, "members": [{"sid": 2311, "name": "양성도"}, {"sid": 2312, "name": "유명훈"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "화", "지", "기타"], "title": "지구 온도 상승량에 따른 해수면 상승 높이 변화 계산기", "video_url": "https://m.site.naver.com/1MLZm", "area": "B"}, {"no": 43, "code": "B26", "grade": 2, "members": [{"sid": 2302, "name": "장윤"}, {"sid": 2303, "name": "정세연"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "지"], "title": "게임을 활용한 해양 미세플라스틱 콘텐츠 개발", "video_url": "https://youtu.be/GYAD8z2B5wc?si=lD1tgsnyKByP8-Ia ", "area": "B"}, {"no": 44, "code": "B27", "grade": 2, "members": [{"sid": 2301, "name": "이채연"}, {"sid": 2304, "name": "하윤아"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물"], "title": "해류따라 이동하는 쓰레기를 추적해 청소선 경로 설계", "video_url": "https://www.youtube.com/watch?v=ATgWvfyZvH0", "area": "B"}, {"no": 45, "code": "B28", "grade": 2, "members": [{"sid": 2403, "name": "이혜나"}, {"sid": 2414, "name": "신도현"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["화", "생"], "title": "해양 N:P 비율 불균형이 플랑크톤과 적조 발생에 미치는 영향 분석", "video_url": "https://m.site.naver.com/1MO6Z", "area": "B"}, {"no": 46, "code": "B29", "grade": 2, "members": [{"sid": 2401, "name": "박예서"}, {"sid": 2404, "name": "정은수"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["화", "기타"], "title": "해양 플라스틱 폐기물의 분포 통계 데이터를 활용한 열분해 공정", "video_url": null, "area": "B"}, {"no": 47, "code": "B30", "grade": 2, "members": [{"sid": 2402, "name": "이서현"}, {"sid": 2413, "name": "석근율"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["생", "기타"], "title": "해양 부유성 녹조류 오염도 진단 및 대응 프로그램", "video_url": "https://youtu.be/B4u1GZwJFS0", "area": "B"}, {"no": 48, "code": "B31", "grade": 2, "members": [{"sid": 2509, "name": "김민준"}, {"sid": 2513, "name": "신승환"}, {"sid": 2517, "name": "최문기"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": [], "title": "해양 로봇을 활용한 해양 생태계 분석", "video_url": "https://youtu.be/fQAfeX9JgaE", "area": "B"}, {"no": 49, "code": "B32", "grade": 2, "members": [{"sid": 2508, "name": "권민근"}, {"sid": 2514, "name": "오진우"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "생", "기타"], "title": "해양 신재생에너지 개발과 산호초 백화 현상 최소화를 위한 AI 기반 통합 최적화 시스템 설계", "video_url": "https://youtu.be/gs0hsCNP_go", "area": "B"}, {"no": 50, "code": "B33", "grade": 2, "members": [{"sid": 2501, "name": "김미소"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "지"], "title": "해수 온도 상승이 해양 RNA 바이러스의 변이 속도에 미치는 영향 ", "video_url": "https://m.site.naver.com/1MP9k", "area": "B"}, {"no": 51, "code": "B34", "grade": 2, "members": [{"sid": 2507, "name": "구은현"}, {"sid": 2512, "name": "성민찬"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["화", "생"], "title": "지구온난화에 따른 해수면 온도 변화와 해양 환경 변수의 장기 추세 분석 및 특정 어종의 생존 가능성 예측", "video_url": "https://m.site.naver.com/1MKR1  https://youtu.be/1fwz7wreCXk?si=LKvMC36PhE9ApG9Z", "area": "B"}, {"no": 68, "code": "B35", "grade": 3, "members": [{"sid": 3305, "name": "김도현"}, {"sid": 3402, "name": "김유빈"}, {"sid": 3405, "name": "김찬영"}, {"sid": 3506, "name": "김지홍"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물"], "title": "핵잠수함 vs 디젤잠수함: 바닷속 에너지 효율 전쟁", "video_url": "https://youtu.be/Qdyh59n7wCE?si=7NNwd86THAJ4Ts6G", "area": "B"}, {"no": 69, "code": "B36", "grade": 3, "members": [{"sid": 3112, "name": "정희도"}, {"sid": 3210, "name": "이언석"}, {"sid": 3213, "name": "홍진수"}, {"sid": 3309, "name": "박시형"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "화", "생", "지", "기타"], "title": "해양 생태계 파괴를 최소화 할 수 있는 우주 비행체 낙하지점 분석", "video_url": "https://youtu.be/WQCGS6e7Em0", "area": "B"}, {"no": 70, "code": "B37", "grade": 3, "members": [{"sid": 3203, "name": "이윤승"}, {"sid": 3505, "name": "김성민"}, {"sid": 3510, "name": "박주형"}, {"sid": 3509, "name": "맹형주"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["생", "기타"], "title": "생물 기반 소재를 활용한 실시간 수질 정화 시스템", "video_url": null, "area": "B"}, {"no": 71, "code": "B38", "grade": 3, "members": [{"sid": 3307, "name": "김성윤"}, {"sid": 3308, "name": "류장현"}, {"sid": 3312, "name": "양성수"}, {"sid": 3313, "name": "이우진"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물"], "title": "한반도 인근 불법 어업을 막아라", "video_url": "https://www.youtube.com/watch?v=yJRZ6uGZYxg", "area": "B"}, {"no": 72, "code": "B39", "grade": 3, "members": [{"sid": 3204, "name": "전예원"}, {"sid": 3302, "name": "이나원"}, {"sid": 3304, "name": "하은결"}, {"sid": 3401, "name": "구승현"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["생"], "title": "유전자 편집 기술의 효율 증진을 통한 해양생물의 생태정화 능력 최적화 및 생태계 피드백 시뮬레이션", "video_url": null, "area": "B"}, {"no": 73, "code": "B40", "grade": 3, "members": [{"sid": 3406, "name": "박예준"}, {"sid": 3504, "name": "김상우"}, {"sid": 3507, "name": "김태규"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "지"], "title": "응력과 입자 시뮬레이션을 적용한 로켓 발사의 해양 영향 분석 프로그램", "video_url": null, "area": "B"}, {"no": 74, "code": "B41", "grade": 3, "members": [{"sid": 3108, "name": "안병훈"}, {"sid": 3209, "name": "이승후"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물"], "title": "인공섬 시뮬레이션", "video_url": "https://youtu.be/rczdC6IGhEU", "area": "B"}, {"no": 75, "code": "B42", "grade": 3, "members": [{"sid": 3411, "name": "장동주"}, {"sid": 3207, "name": "이석준"}, {"sid": 3208, "name": "이성민"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["화"], "title": "푸리에 변환과 선형회귀를 이용하여 개선된 해양소음 최적화 프로그램", "video_url": "https://youtu.be/EN6vzAF9eHo", "area": "B"}, {"no": 76, "code": "B43", "grade": 3, "members": [{"sid": 3501, "name": "배시아"}, {"sid": 3103, "name": "유서윤"}, {"sid": 3301, "name": "양수빈"}], "area_name": "해양 생태계 및 환경 보존", "disciplines": ["물", "생"], "title": "해양 속 미생물을 이용한 분석 프로그램", "video_url": "https://m.site.naver.com/1MNds", "area": "B"}, {"no": 17, "code": "C01", "grade": 1, "members": [{"sid": 1108, "name": "김서우"}, {"sid": 1109, "name": "김재성"}, {"sid": 1114, "name": "장서준"}, {"sid": 1117, "name": "하승우"}], "area_name": "해양 자원의 이용 기반 구축", "disciplines": ["물", "화", "지"], "title": "파력 발전의 물리적 원리와 해양 환경의 조화를 통한 대한민국의 최적 해역 탐구", "video_url": "https://youtu.be/Y-9X5pVdaV0", "area": "C"}, {"no": 18, "code": "C02", "grade": 1, "members": [{"sid": 1201, "name": "박민"}, {"sid": 1212, "name": "송은오"}, {"sid": 1218, "name": "차승현"}, {"sid": 1219, "name": "한지원"}], "area_name": "해양 자원의 이용 기반 구축", "disciplines": ["물", "지", "기타"], "title": "인공위성의 분포와 그에 따른 인터넷이 통하는 정도에 대한 탐구", "video_url": "https://www.youtube.com/watch?v=2pDl-gCrHX8", "area": "C"}, {"no": 19, "code": "C03", "grade": 1, "members": [{"sid": 1203, "name": "방승현"}, {"sid": 1205, "name": "이송현"}, {"sid": 1206, "name": "임세영"}, {"sid": 1213, "name": "윤승민"}], "area_name": "해양 자원의 이용 기반 구축", "disciplines": ["생", "지", "기타"], "title": "ARGO FLOAT를 활용한 실시간 선박 이동경로 예측 프로그램 제작", "video_url": "(D11) 초지향성 스피커 기반 선박 간 통신 시스템", "area": "C"}, {"no": 20, "code": "C04", "grade": 1, "members": [{"sid": 1214, "name": "이상헌"}, {"sid": 1211, "name": "서준혁"}, {"sid": 1215, "name": "이재원"}, {"sid": 1217, "name": "조재휘"}], "area_name": "해양 자원의 이용 기반 구축", "disciplines": ["물", "지"], "title": "Arduino 센서와 스마트 장비를 이용한 스마트 양식 팜의 구축", "video_url": "(D12)-해류 흐름 분석을 통한 요구조자의 위치 분석", "area": "C"}, {"no": 21, "code": "C05", "grade": 1, "members": [{"sid": 1305, "name": "제승현"}, {"sid": 1304, "name": "이은수"}, {"sid": 1311, "name": "류한결"}, {"sid": 1319, "name": "정선웅"}], "area_name": "해양 자원의 이용 기반 구축", "disciplines": ["화", "지"], "title": "해저 광물 채굴 효율 향상을 위한 침전 분포 예측", "video_url": "https://youtu.be/LCUiLutTjEo", "area": "C"}, {"no": 52, "code": "C06", "grade": 2, "members": [{"sid": 2405, "name": "구민찬"}, {"sid": 2415, "name": "이인규"}], "area_name": "해양 자원의 이용 기반 구축", "disciplines": ["물", "지"], "title": "중력 이상 분석을 통한 AI 기반 해저 자원 탐사", "video_url": null, "area": "C"}, {"no": 53, "code": "C07", "grade": 2, "members": [{"sid": 2416, "name": "이정훈"}, {"sid": 2417, "name": "정도현"}], "area_name": "해양 자원의 이용 기반 구축", "disciplines": ["물", "지"], "title": "AI를 이용한 양식장 수질 관리 시뮬레이터", "video_url": "https://youtu.be/gHwVG39ssWQ", "area": "C"}, {"no": 54, "code": "C08", "grade": 2, "members": [{"sid": 2503, "name": "김호연"}, {"sid": 2504, "name": "최연정"}], "area_name": "해양 자원의 이용 기반 구축", "disciplines": ["물", "화"], "title": "파도 기반 연안 활동 가능성 점수 예측 시스템", "video_url": "https://www.youtube.com/watch?v=NJb0-CfDbs0&t=2s", "area": "C"}, {"no": 77, "code": "C09", "grade": 3, "members": [{"sid": 3110, "name": "이호준"}, {"sid": 3113, "name": "조용석"}], "area_name": "해양 자원의 이용 기반 구축", "disciplines": ["물", "화", "생", "지"], "title": "지역에 따른 에너지 발전", "video_url": "https://www.youtube.com/watch?v=NRf_FCr7XCE", "area": "C"}, {"no": 22, "code": "D01", "grade": 1, "members": [{"sid": 1204, "name": "우민서"}, {"sid": 1208, "name": "김시윤"}, {"sid": 1210, "name": "박준서"}, {"sid": 1220, "name": "허진혁"}], "area_name": "해양 선박 관련 기술", "disciplines": ["물", "지"], "title": "Python 및 Orange3 기반 공동현상 예측 및 모델링", "video_url": "https://youtu.be/_vN7h26WyEk?si=xms9LKxlhceg5Mlv", "area": "D"}, {"no": 23, "code": "D02", "grade": 1, "members": [{"sid": 1301, "name": "김가은"}, {"sid": 1308, "name": "김도훈"}, {"sid": 1317, "name": "이채한"}, {"sid": 1318, "name": "장한규"}], "area_name": "해양 선박 관련 기술", "disciplines": ["화", "생"], "title": "파도의 파형 분석을 통한 파동 상쇄 선박 보호 모델 제작", "video_url": "https://youtu.be/Xm-3_3aQxQI?si=tm0Ga5NnA3Uy4SmR", "area": "D"}, {"no": 24, "code": "D03", "grade": 1, "members": [{"sid": 1401, "name": "김아현"}, {"sid": 1402, "name": "이지유"}, {"sid": 1407, "name": "권오빈"}, {"sid": 1415, "name": "이주현"}], "area_name": "해양 선박 관련 기술", "disciplines": ["물", "화", "지"], "title": "해양산성화로 인한 선박 부식 방지 장치 개발", "video_url": "https://m.site.naver.com/1MNBR", "area": "D"}, {"no": 25, "code": "D04", "grade": 1, "members": [{"sid": 1403, "name": "정하린"}, {"sid": 1408, "name": "김민기"}, {"sid": 1409, "name": "김현우"}, {"sid": 1414, "name": "이제영"}], "area_name": "해양 선박 관련 기술", "disciplines": ["물", "지", "기타"], "title": "음파 감쇠 기반 수중 드론 네트워크를 활용한 지상–심해 간 통신 경로 최적화 모델 연구", "video_url": "https://youtu.be/Y6ZFp770j1k", "area": "D"}, {"no": 55, "code": "D05", "grade": 2, "members": [{"sid": 2109, "name": "양승우"}, {"sid": 2115, "name": "최승기"}, {"sid": 2117, "name": "황우진"}], "area_name": "해양 선박 관련 기술", "disciplines": ["화", "생"], "title": "센서 융합 기반 파도 대응형 선박 설계", "video_url": null, "area": "D"}, {"no": 56, "code": "D06", "grade": 2, "members": [{"sid": 2112, "name": "이재원"}, {"sid": 2116, "name": "허윤"}], "area_name": "해양 선박 관련 기술", "disciplines": ["물", "지"], "title": "북극 항로 최적화", "video_url": "https://youtu.be/anZ8qJKxAG4", "area": "D"}, {"no": 57, "code": "D07", "grade": 2, "members": [{"sid": 2106, "name": "김도훈"}, {"sid": 2108, "name": "송범준"}], "area_name": "해양 선박 관련 기술", "disciplines": ["화", "생"], "title": "선박 안정성을 위한 스마트 화물 적재", "video_url": null, "area": "D"}, {"no": 58, "code": "D08", "grade": 2, "members": [{"sid": 2110, "name": "우지완"}, {"sid": 2113, "name": "이하진"}], "area_name": "해양 선박 관련 기술", "disciplines": ["생", "기타"], "title": "해양 환경에 따른 선박의 연료 효율성 및 경로 최적화", "video_url": "https://youtu.be/_ltKLU3vz9I?si=K09Gfz7NGFibalaQ", "area": "D"}, {"no": 59, "code": "D09", "grade": 2, "members": [{"sid": 2202, "name": "김소원"}, {"sid": 2213, "name": "장현제"}], "area_name": "해양 선박 관련 기술", "disciplines": ["물"], "title": "위성 항법 시스템 없이 구조용 헬리콥터의 위치 파악 가능한 인공지능 개발", "video_url": "https://youtu.be/C21DDA8bh-s?si=TXQTqQ83gKwjnxXz", "area": "D"}, {"no": 60, "code": "D10", "grade": 2, "members": [{"sid": 2308, "name": "김태규"}, {"sid": 2315, "name": "정재현"}, {"sid": 2316, "name": "정휘찬"}], "area_name": "해양 선박 관련 기술", "disciplines": ["물", "생", "지", "기타"], "title": "날씨 정보를 고려한 가장 효율적인 선박 운항 경로 제시 프로그램 ", "video_url": "https://youtu.be/0NEWNykq8nA?si=PBASPaekowadzTAf", "area": "D"}, {"no": 61, "code": "D11", "grade": 2, "members": [{"sid": 2307, "name": "김정원"}, {"sid": 2317, "name": "한도윤"}], "area_name": "해양 선박 관련 기술", "disciplines": ["물", "기타"], "title": "초지향성 스피커 기반 선박 간 통신 시스템 구축", "video_url": "https://www.youtube.com/watch?v=UskrWamR0dg", "area": "D"}, {"no": 62, "code": "D12", "grade": 2, "members": [{"sid": 2407, "name": "김민찬"}, {"sid": 2409, "name": "김준서"}, {"sid": 2412, "name": "박예일"}], "area_name": "해양 선박 관련 기술", "disciplines": ["물", "지"], "title": " 해류 흐름 분석을 통한 요구조자의 위치 분석", "video_url": null, "area": "D"}, {"no": 63, "code": "D13", "grade": 2, "members": [{"sid": 2505, "name": "강준호"}, {"sid": 2511, "name": "박관호"}], "area_name": "해양 선박 관련 기술", "disciplines": ["기타"], "title": "파도와 무게중심 변화에 따른 선박 전복 가능성 예측", "video_url": "https://youtu.be/QF5rEOB9TCg?si=oxTnXvHLHtff5Epk", "area": "D"}, {"no": 64, "code": "D14", "grade": 2, "members": [{"sid": 2515, "name": "임찬민"}, {"sid": 2516, "name": "임호진"}], "area_name": "해양 선박 관련 기술", "disciplines": ["생"], "title": "딥러닝 기반 선박 엔진 진동·음향 분석을 통한 이상 징후 조기 감지를 통한 운항 안전 최적화", "video_url": "https://youtu.be/kzk5CsxWzUA", "area": "D"}, {"no": 65, "code": "D15", "grade": 2, "members": [{"sid": 2506, "name": "공준호"}, {"sid": 2510, "name": "노현우"}], "area_name": "해양 선박 관련 기술", "disciplines": ["물", "기타"], "title": "선박 진수 시 안정 조건에 대한 물리적 분석", "video_url": "(C09)지역에 따른 에너지 발전", "area": "D"}, {"no": 78, "code": "D16", "grade": 3, "members": [{"sid": 3212, "name": "최현민"}, {"sid": 3310, "name": "박재성"}, {"sid": 3311, "name": "박지환"}, {"sid": 3412, "name": "조은우"}], "area_name": "해양 선박 관련 기술", "disciplines": [], "title": "Project Y1ELTAL - 지능형 선박 설계 프로젝트", "video_url": "https://youtu.be/FMFptlWUfIY", "area": "D"}, {"no": 79, "code": "D17", "grade": 3, "members": [{"sid": 3404, "name": "김준민"}, {"sid": 3410, "name": "이재영"}, {"sid": 3512, "name": "표정훈"}], "area_name": "해양 선박 관련 기술", "disciplines": [], "title": "PID제어를 이용한 선박 위치 고정", "video_url": "https://youtu.be/UGVIUU2YL-I", "area": "D"}, {"no": 80, "code": "D18", "grade": 3, "members": [{"sid": 3205, "name": "강석현"}, {"sid": 3502, "name": "서해원"}], "area_name": "해양 선박 관련 기술", "disciplines": ["물", "생", "지"], "title": "NH3 연료 선박에 대한 암모니아 산물의 효과적 처리 방법 탐구", "video_url": "https://youtu.be/uixmduzNvJI", "area": "D"}, {"no": 81, "code": "D19", "grade": 3, "members": [{"sid": 3109, "name": "이승준"}, {"sid": 3407, "name": "송준환"}, {"sid": 3511, "name": "안승준"}], "area_name": "해양 선박 관련 기술", "disciplines": ["물", "화", "생", "지", "기타"], "title": "선조들의 지혜: 거북선과 왜선, 서양 배의 비교 ", "video_url": "https://www.youtube.com/watch?si=zFaP15paHe_tLTbc&v=LVazIAbFOl8&feature=youtu.be ", "area": "D"}, {"no": 82, "code": "D20", "grade": 3, "members": [{"sid": 3201, "name": "김서경"}, {"sid": 3211, "name": "정지훈"}, {"sid": 3303, "name": "이서경"}], "area_name": "해양 선박 관련 기술", "disciplines": ["물"], "title": "무선통신기반 선박 상태 모니터링", "video_url": "https://youtu.be/bvxHTLTOV8Y", "area": "D"}, {"no": 83, "code": "D21", "grade": 3, "members": [{"sid": 3202, "name": "여유진"}, {"sid": 3503, "name": "손지민"}, {"sid": 3102, "name": "김윤정"}, {"sid": 3403, "name": "정유진"}], "area_name": "해양 선박 관련 기술", "disciplines": ["생", "기타"], "title": "강화학습 기반 가상 자율선박의 접안 시뮬레이션 구현", "video_url": "https://youtu.be/VX5B9Q6sHEo?si=cdBXg1hiJtSmbIZ0", "area": "D"}, {"no": 84, "code": "D22", "grade": 3, "members": [{"sid": 3106, "name": "백종윤"}, {"sid": 3111, "name": "정우진"}, {"sid": 3409, "name": "이원혁"}], "area_name": "해양 선박 관련 기술", "disciplines": ["물", "지", "기타"], "title": "배 형상에 따른 운항 효율 증진을 위한 유체 저항력 시뮬레이션", "video_url": "https://youtu.be/NQSCsslKo4Y", "area": "D"}];
+
+// ─────────────── Voyage Stage Data ───────────────
+const STAGES = [
+  {
+    num: "00",
+    nameEn: "ORIENTATION",
+    name: "출항 전 정비",
+    pitch: null,
+    summary: "Ocean ICT가 무엇인지, 우리가 무엇을 할 것인지 안다. 선배들의 기록을 둘러보고 팀을 꾸린다.",
+    output: "팀 구성 · 관심 영역 결정",
+    activities: [
+      "Ocean ICT 행사와 4개 영역(A/B/C/D) 안내",
+      "이 사이트의 선배 작품 아카이브 둘러보기",
+      "마음을 끈 프로젝트 3개씩 메모하기",
+      "4인 팀 구성, 팀명 정하기",
+      "팀의 관심 영역 1~2개로 좁히기",
+    ],
+    checks: [
+      { t: "팀원 4명 확정",        s: "역할 분담은 다음 단계에서 정해도 된다" },
+      { t: "팀명 결정",            s: "주제와 어울리지 않아도 괜찮다. 우리만의 정체성" },
+      { t: "관심 영역 1~2개 선택", s: "한 영역에 집중하면 깊이가 생긴다" },
+    ],
+    tip: "선배 영상 1~2개를 끝까지 보는 것을 권한다. 좋은 발표가 어떤지 감을 잡는 가장 빠른 방법이다.",
+  },
+  {
+    num: "01",
+    nameEn: "DISCOVER",
+    name: "주제 발굴",
+    pitch: null,
+    summary: "관심 영역 안에서 진짜 우리가 풀고 싶은 문제 하나를 찾는다. 막연한 호기심을 구체적 질문으로 다듬는다.",
+    output: "팀 주제 1개 · 차별화 포인트",
+    activities: [
+      "우리 영역의 선배 작품 다시 분석 (어떻게 접근했는가)",
+      "팀 브레인스토밍 — 후보 주제 5개 발산",
+      "각 후보를 5W1H로 정리 (누가/무엇을/왜/언제/어디서/어떻게)",
+      "실현 가능성·차별성을 기준으로 1개로 좁히기",
+      "비슷한 선배 주제와 우리의 차이점 정리",
+    ],
+    checks: [
+      { t: "주제 1줄 요약",      s: "한 문장에 ‘무엇을 한다’가 들어가야 한다" },
+      { t: "왜 이 주제인가",     s: "팀원 모두가 답할 수 있어야 한다" },
+      { t: "우리는 어떻게 다른가", s: "선배 주제와의 차이를 명확히" },
+    ],
+    tip: "좋은 주제는 ‘답이 정해진 검색’이 아니다. 검색하면 바로 나오는 건 다른 사람의 답이다. 우리가 풀어야 답이 나오는 걸 골라라.",
+  },
+  {
+    num: "02",
+    nameEn: "PLAN & PITCH",
+    name: "계획서와 첫 무대",
+    pitch: "🎤 1차 발표 · 5분 피칭",
+    summary: "주제를 실행 계획으로 옮기고, 다른 팀과 선생님 앞에서 5분 발표한다. 피드백을 받아 계획을 다듬는다.",
+    output: "기획서 · 피칭 슬라이드 · 보완된 계획",
+    downloads: [
+      {
+        name: "OceanICT 계획서 양식",
+        filename: "OceanICT_계획서_양식.docx",
+        ext: "DOCX",
+        desc: "문제 정의, 산출물, 데이터, 일정, 역할 분담 — 5개 항목 양식. 팀당 1부 작성해 제출.",
+        dataKey: "planTemplate",
+      },
+    ],
+    activities: [
+      "기획서 작성 — 문제 정의 / 산출물 형태 / 데이터·도구 / 일정 / 역할 분담",
+      "피칭 슬라이드 5장 이내로 구성",
+      "🎤 5분 발표 + 질의응답 (전체 팀 앞에서)",
+      "다른 팀과 선생님 피드백 받기",
+      "피드백을 반영해 기획서 v2 작성",
+    ],
+    checks: [
+      { t: "기획서 1부 작성",    s: "5개 항목이 모두 채워져야 한다" },
+      { t: "5분 발표 리허설",   s: "시간 초과는 감점. 짧게 끝나도 감점" },
+      { t: "역할 분담 확정",    s: "누가 무엇을 만들 것인지 이름 단위로" },
+      { t: "피드백 메모",       s: "받은 피드백 중 반영할 것 3개 선택" },
+    ],
+    tip: "5분 발표에서 가장 중요한 건 ‘왜 이게 흥미로운 문제인가’를 30초 안에 전달하는 것이다. 기술 설명은 그 다음이다.",
+  },
+  {
+    num: "03",
+    nameEn: "BUILD",
+    name: "제작",
+    pitch: null,
+    summary: "본격적으로 만든다. 코드든, 모델이든, 포스터든 — 약속한 산출물을 형태로 빚어낸다.",
+    output: "산출물 초안 · 발표 자료 초안",
+    activities: [
+      "팀원별 역할에 따라 실제 제작 진행",
+      "중간 점검 — 짧은 스탠드업으로 상태 공유",
+      "선생님 컨설팅 활용 (막힌 부분 질문)",
+      "예상 못 한 문제 해결 기록 (발표에 쓸 재료)",
+      "발표용 슬라이드·포스터 초안 정리",
+    ],
+    checks: [
+      { t: "산출물 70% 이상 완성",   s: "마지막 단계에서 완성도를 올린다" },
+      { t: "발표 자료 초안 준비",   s: "마지막 단계는 다듬는 시간이지 새로 만드는 시간이 아니다" },
+      { t: "실패·시행착오 기록",    s: "이게 좋은 발표의 핵심 재료가 된다" },
+    ],
+    tip: "이 단계는 ‘완벽’보다 ‘완성’이 중요하다. 80% 완성된 결과가 50% 완성된 야심작보다 항상 낫다.",
+  },
+  {
+    num: "04",
+    nameEn: "SHOWCASE",
+    name: "최종 발표",
+    pitch: "🎤 최종 발표 · 갤러리 워크",
+    summary: "선배들이 했던 것처럼 부스를 세우고 발표한다. 청중을 설득하고, 다른 팀에게 영감을 준다.",
+    output: "최종 산출물 · 발표 · 동료 피드백 · 회고",
+    activities: [
+      "발표 부스/구역 세팅",
+      "🎤 갤러리 워크 형식 발표 — 각 팀 부스에서 3분 발표, 청중 순환",
+      "다른 팀 발표 청중으로 참여 · 피드백 카드 작성",
+      "팀 회고 — 우리가 배운 것 / 다시 하면 다르게 할 것",
+      "(선택) 영상 녹화해서 아카이브 등록",
+    ],
+    checks: [
+      { t: "발표 3회 이상 반복",       s: "청중이 순환하므로 같은 발표를 여러 번 한다" },
+      { t: "동료 피드백 카드 5장 작성", s: "다른 팀에게 ‘좋았던 점 + 궁금한 점’ 형식으로" },
+      { t: "팀 회고 작성",            s: "한 줄이라도 좋다. 다음 항해를 위한 기록" },
+    ],
+    tip: "발표는 모니터 보고 읽는 시간이 아니다. 청중의 눈을 보고, 우리가 무엇을 발견했는지 자랑하는 시간이다.",
+  },
+];
+
+// ─────────────── Render Voyage ───────────────
+function renderVoyage() {
+  const container = document.getElementById('voyage-stages');
+  container.innerHTML = STAGES.map((s, i) => `
+    <div class="stage" onclick="toggleStage(${i})" id="stage-${i}">
+      <div class="stage-num">${s.num}</div>
+      <div class="stage-name-en">— ${s.nameEn}</div>
+      <div class="stage-name">${s.name}</div>
+      ${s.pitch ? `<div class="stage-pitch">${s.pitch}</div>` : ''}
+      <div class="stage-summary">${s.summary}</div>
+      ${(s.downloads || []).length ? `
+        <div class="stage-dl-chip" onclick="event.stopPropagation(); toggleStage(${i});">
+          ⬇ ${s.downloads.length} TEMPLATE${s.downloads.length>1?'S':''}
+        </div>` : ''}
+      <div class="stage-out">
+        <div class="lbl">OUTPUT</div>
+        <div class="val">${s.output}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleStage(idx) {
+  const s = STAGES[idx];
+  const existing = document.querySelector('.stage-detail');
+  const isCurrentOpen = existing && existing.dataset.idx === String(idx);
+
+  document.querySelectorAll('.stage').forEach(el => el.classList.remove('open'));
+  if (existing) existing.remove();
+  if (isCurrentOpen) return;
+
+  document.getElementById('stage-'+idx).classList.add('open');
+
+  const detail = document.createElement('div');
+  detail.className = 'stage-detail open';
+  detail.dataset.idx = idx;
+
+  const downloadHtml = (s.downloads || []).map(d => `
+    <div class="download-box">
+      <div class="dl-text">
+        <div class="lbl">— TEMPLATE</div>
+        <h5>${d.name}</h5>
+        <p>${d.desc}</p>
+      </div>
+      <a href="#" class="dl-btn" onclick="event.preventDefault(); downloadFile('${d.dataKey}', '${d.filename}');">
+        <span class="ico">⬇</span>
+        <span>다운로드</span>
+        <span class="meta">${d.ext}</span>
+      </a>
+    </div>
+  `).join('');
+
+  detail.innerHTML = `
+    <div class="stage-detail-head">
+      <div class="num">${s.num}</div>
+      <h3>${s.name}</h3>
+      <div class="en">${s.nameEn}${s.pitch ? '  ·  ' + s.pitch.replace('🎤 ','') : ''}</div>
+    </div>
+    ${downloadHtml}
+    <div class="stage-detail-grid">
+      <div class="detail-block">
+        <div class="lbl">— ACTIVITIES</div>
+        <h5>이 단계에서 하는 것들</h5>
+        <ul>
+          ${s.activities.map(a => `<li>${a}</li>`).join('')}
+        </ul>
+      </div>
+      <div class="detail-block">
+        <div class="lbl">— CHECKLIST</div>
+        <h5>끝낼 때까지의 체크리스트</h5>
+        <ul class="checks">
+          ${s.checks.map(c => `<li>${c.t}<small>${c.s}</small></li>`).join('')}
+        </ul>
+      </div>
+    </div>
+    <div class="detail-tips">
+      <strong>— TIP FROM CAPTAIN</strong>
+      ${s.tip}
+    </div>
+  `;
+
+  // Insert after the stages grid
+  const grid = document.getElementById('voyage-stages');
+  grid.parentNode.insertBefore(detail, grid.nextSibling);
+  detail.scrollIntoView({behavior: 'smooth', block: 'center'});
+}
+
+// ─────────────── Project rendering ───────────────
+const grid = document.getElementById('grid');
+const searchEl = document.getElementById('search');
+const areaEl = document.getElementById('area-filter');
+const gradeEl = document.getElementById('grade-filter');
+const discEl = document.getElementById('disc-filter');
+
+function isValidVideo(url) {
+  return url && typeof url === 'string' && (url.includes('youtube.com/watch') || url.includes('youtu.be'));
+}
+function extractYtId(url) {
+  if (!url) return null;
+  const m1 = url.match(/[?&]v=([A-Za-z0-9_-]{11})/);
+  if (m1) return m1[1];
+  const m2 = url.match(/youtu\.be\/([A-Za-z0-9_-]{11})/);
+  if (m2) return m2[1];
+  return null;
+}
+function shortArea(a) { return {A:'문화·관광', B:'생태·환경', C:'자원 이용', D:'선박 기술'}[a] || ''; }
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function renderProjects() {
+  const q = searchEl.value.trim().toLowerCase();
+  const area = areaEl.value;
+  const grade = gradeEl.value;
+  const disc = discEl.value;
+
+  const filtered = TEAMS.filter(t => {
+    if (area && t.area !== area) return false;
+    if (grade && String(t.grade) !== grade) return false;
+    if (disc && !(t.disciplines || []).includes(disc)) return false;
+    if (q && !(t.title || '').toLowerCase().includes(q) && !(t.code || '').toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  grid.innerHTML = filtered.map(t => {
+    const hasVideo = isValidVideo(t.video_url);
+    return `
+      <div class="card" onclick='openModal(${JSON.stringify(t.code)})'>
+        <div class="card-top">
+          <div class="card-code">${t.code}</div>
+          <div class="card-badges">
+            ${hasVideo ? '<span class="badge video">▶ VIDEO</span>' : ''}
+            <span class="badge">G${t.grade}</span>
+          </div>
+        </div>
+        <h4>${escapeHtml(t.title || '(제목 없음)')}</h4>
+        <div class="card-foot">
+          <div class="area">${t.area} · ${shortArea(t.area)}</div>
+          <div class="disc">${(t.disciplines || []).map(d => `<span>${d}</span>`).join('')}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('visible-count').textContent = String(filtered.length).padStart(2,'0');
+  document.getElementById('total-count').textContent = String(TEAMS.length).padStart(2,'0');
+
+  const labels = [];
+  if (area) labels.push(`AREA ${area}`);
+  if (grade) labels.push(`G${grade}`);
+  if (disc) labels.push(disc.toUpperCase());
+  if (q) labels.push(`"${q.toUpperCase()}"`);
+  document.getElementById('active-filter').textContent = labels.length ? labels.join(' · ') : 'ALL DOMAINS';
+}
+
+function filterArea(a) {
+  areaEl.value = a;
+  renderProjects();
+  document.getElementById('projects').scrollIntoView({behavior: 'smooth'});
+}
+
+function openModal(code) {
+  const t = TEAMS.find(x => x.code === code);
+  if (!t) return;
+  document.getElementById('m-code').textContent = t.code + ' — 2025';
+  document.getElementById('m-title').textContent = t.title;
+  document.getElementById('m-area').textContent = `${t.area} · ${t.area_name || shortArea(t.area)}`;
+  document.getElementById('m-grade').textContent = `${t.grade}학년`;
+  document.getElementById('m-disc').textContent = (t.disciplines || []).join(' · ') || '—';
+  document.getElementById('m-members').innerHTML = (t.members || []).map(m =>
+    `<div class="member-chip"><span>${m.sid}</span>${escapeHtml(m.name)}</div>`
+  ).join('');
+  const wrap = document.getElementById('m-video-wrap');
+  const vid = extractYtId(t.video_url);
+  if (vid) {
+    wrap.innerHTML = `<div class="modal-video"><iframe src="https://www.youtube.com/embed/${vid}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+  } else {
+    wrap.innerHTML = `<div class="modal-novideo">발표 영상이 아직 아카이브되지 않았습니다</div>`;
+  }
+  document.getElementById('modal-bg').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-bg').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function updateAreaCounts() {
+  ['A','B','C','D'].forEach(a => {
+    const n = TEAMS.filter(t => t.area === a).length;
+    const el = document.getElementById('count-'+a);
+    if (el) el.textContent = String(n).padStart(2,'0');
+  });
+}
+
+[searchEl, areaEl, gradeEl, discEl].forEach(el => el.addEventListener('input', renderProjects));
+updateAreaCounts();
+renderProjects();
+renderVoyage();
+</script>
+
+</body>
+</html>
